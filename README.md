@@ -1,67 +1,32 @@
-# SACR -- Coreference Chain Annotation Tool
+# До безобразия простой инференс разрешения кореферентности для русского языка
 
-## Introduction
+## 1. Установите зависимости
 
-SACR (from the French "Script d'Annotation des Chaînes de Référence") is a tool optimized for coreference chain annotation.  It has been published in the following paper:
+Создайте виртуальнукю среду python 3.7, активируйте ее и установите зависимости (`pip install -r requirements.txt`).
+Модель обучена и инференсится при помощи пакета `allennlp==2.2.0`, поэтому проверьте его нормальное функицонирование: `allennlp evaluate --help`.
 
-[Oberle B. (2018). **SACR: A Drag-and-Drop Based Tool for Coreference Annotation.** _Proceedings of the 11th Edition of the Language Resources and Evaluation Conference (LREC 2018)_. Miyazaki, Japan.](http://www.lrec-conf.org/proceedings/lrec2018/summaries/178.html)
+## 2. Замените датаридер
 
-You can download the poster [here](http://boberle.com/publications/res/Oberle-2018_lrec_poster.pdf).
+Чтобы модель читала вводимые данные правильно, замените файл в dist-packages виртуальной среды с allennlp_models/common/ontonotes.py на ontonotes.py, который лежит в корне этого проекта.
 
+## 3. Скачайте и запустите модель
 
-## Usage
+Скачайте веса модели отсюда: https://storage.googleapis.com/coref-qa-rus-1/model2.tar.gz
+И запустите инференс командой: `python autoannotations.py --model [ПУТЬ К МОДЕЛИ]`.
+Команда предложит ввести текст и выделит в нем кореферентные цепочки, например: 
+`Введите текст: Ввозить в Россию гаджеты станет проще, заявил премьер Михаил Мишустин на совещании со своими заместителями. По его словам, это решение обеспечит потребности внутреннего рынка, а также позволит избежать сбоев и остановок производств.`
+`Ввозить в Россию гаджеты станет проще , заявил {M1: премьер Михаил Мишустин } на совещании со {M1: своими } заместителями . По {M1: его } словам , это решение обеспечит потребности внутреннего рынка , а также позволит избежать сбоев и остановок производств .`
+Вывод модели:
+`Ввозить в Россию гаджеты станет проще , заявил {M1: премьер Михаил Мишустин } на совещании со {M1: своими } заместителями . По {M1: его } словам , это решение обеспечит потребности внутреннего рынка , а также позволит избежать сбоев и остановок производств .`
 
-SACR is a single webpage.  All operations are done in the browser.  You can download it and open the `index.html` file, or use it online at [boberle.com](http://boberle.com/projects/sacr).
+## 4. Визуализируйте результат
 
-The workflow is as follows:
+Цепочки можно визулизировать и редактировать, открыв index.html в браузере и вставив полученный выше текст с разметкой в текстовое поле. Получится вот так:
 
-(1) Mark the referring expressions:
+![build the coreference chains](example.png)
 
-![Mark the referring expressions](docs/screenshot02.png)
+## Благодарности
 
-
-(2) Build the coreference chains:
-
-![build the coreference chains](docs/screenshot03.png)
-
-
-(3) Add feature annotations:
-
-![add feature annotations](docs/screenshot04.png)
-
-
-(4) Play and search:
-
-![play and search](docs/screenshot05.png)
-
-
-
-## Getting help
-
-Documentation can be found in the `user_guide.pdf` file.
-
-Video tutorials (in French) are available on my [Youtube channel](https://www.youtube.com/channel/UCOwucR9MSBbuOsa1owqyM5Q), with a dedicated
-[playlist](https://www.youtube.com/watch?v=mjxR7m5fSrE&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z):
-
-- [01: ouvrir un fichier](https://www.youtube.com/watch?v=mjxR7m5fSrE&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=1),
-- [02: annoter](https://www.youtube.com/watch?v=LDqy4x5xQl8&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=2),
-- [03: stratégies d'annotation](https://www.youtube.com/watch?v=0oslSmkb020&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=3),
-- [04: sauver les annotations](https://www.youtube.com/watch?v=dvqVGfMPP_w&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=4),
-- [05: la popup](https://www.youtube.com/watch?v=xpP39cZamlk&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=5),
-- [06: naviguer](https://www.youtube.com/watch?v=f4GE63hibKc&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=6),
-- [07: annoter les propriétés de chaque mention](https://www.youtube.com/watch?v=pT-ICzuQAAo&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=7),
-- [08: rechercher](https://www.youtube.com/watch?v=-tFTjhFFS5o&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=8),
-- [09 configurer](https://www.youtube.com/watch?v=lEsM8F-IK8M&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=9),
-- [10: récapitulatif](https://www.youtube.com/watch?v=H62pm0Zyh7M&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=10),
-- [11: comment afficher la popup bloquée par Firefox?](https://www.youtube.com/watch?v=rp_f0LPr-dg&list=PLLXnGmOewaNXrAvW9xsrtNrYqUDocZ18Z&index=11)
-
-
-
-
-## Source code and licence
-
-Source code may be found on [github](https://github.com/boberle/sacr) or [boberle.com](http://boberle.com).
-
-The tool is distributed under the terms of the Mozilla Public License v2.  This program comes with ABSOLUTELY NO WARRANTY, see the LICENSE file for more details.
+Красивый редактор из последнего пункта - от Bruno Oberle (https://github.com/boberle/sacr), слегка измененный и переведенный на русский. 
 
 
