@@ -31,12 +31,12 @@ for tokenized_sent in templist:
         token_index += 1
 tempstring = '#begin document (book0); part 0' + tempstring + '\n' + '#end document'
 
-with open(r'temp.txt', 'w', encoding='utf-8') as tempfile:
+with open(TEMP_FILE, 'w', encoding='utf-8') as tempfile:
     tempfile.write(tempstring)
     tempfile.close()
 
 print('Loading and building the model...')
-p = subprocess.run(["python", "-m", "allennlp" "evaluate", f"{MODEL}", f"{TEMP_FILE}", "--predictions-output-file", "{OUT_FILE}"], capture_output=True)
+p = subprocess.run(["allennlp", "evaluate", f"{MODEL}", f"{TEMP_FILE}", "--predictions-output-file", f"{OUT_FILE}"], capture_output=True)
 
 def get_mention(begin, text_list, all_cluster_tokens):
     for id, cluster in enumerate(all_cluster_tokens[0]):
