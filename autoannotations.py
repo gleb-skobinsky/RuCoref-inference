@@ -6,6 +6,7 @@ import sys
 import os
 import argparse
 import subprocess
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", help="Path to the coref model")
 args = parser.parse_args()
