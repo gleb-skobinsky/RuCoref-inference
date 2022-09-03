@@ -11,7 +11,8 @@
 
 ## 3. Скачайте и запустите модель
 
-Скачайте веса модели отсюда: https://storage.googleapis.com/coref-qa-rus-1/model2.tar.gz
+Скачайте веса модели отсюда: https://disk.yandex.ru/d/0TKZcXkaBCbq3Q
+
 И запустите инференс командой: `python autoannotations.py --model [ПУТЬ К МОДЕЛИ]`.<br>
 Например: `python autoannotations.py --model model2.tar.gz`.<br>
 Команда предложит ввести текст и выделит в нем кореферентные цепочки, например: <br>
